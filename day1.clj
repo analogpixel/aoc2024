@@ -1,12 +1,11 @@
 (ns day1.core
   (:require [clojure.string :as str])
-  (:gen-class))
+)
 
-
-(defn -main []
+(defn solve []
   (let [ 
         ;rows (map (fn [data] (mapv (fn [a] (Integer/parseInt a)) (str/split data #"\s+"))) (str/split (slurp "sample_data.txt") #"\n" ))
-        rows (map (fn [data] (mapv #(Integer/parseInt %) (str/split data #"\s+"))) (str/split (slurp "data.txt") #"\n" ))
+        rows (map (fn [data] (mapv #(Integer/parseInt %) (str/split data #"\s+"))) (str/split (slurp "day_1_data.txt") #"\n" ))
         row1 (sort (map first rows))
         row2 (sort (map last rows))
         difference (mapv (fn [x y] (Math/abs (- x y))) row1 row2)
@@ -19,4 +18,4 @@
     )
   )
 
-(-main)
+(solve)
