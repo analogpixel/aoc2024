@@ -13,14 +13,20 @@
   )
   )
 
+; convert vector of string numbers to ints
+(defn to-int [x] (map (fn [zz] (Integer/parseInt zz)) x))
+
+; calculate the size between each number
+(defn jump-size [x] (map (fn [y] (- (first y) (last y) )) x))
+
 (defn solve []
   (let [data ( as-> "day_2_sample_data.txt" v
                 (slurp v)
                 (str/split v #"\n")
                 (mapv #(str/split % #" ") v)
-                (mapv (fn [x] (map (fn [zz] (Integer/parseInt zz)) x)) v)
+                (mapv to-int v)
                 (mapv #(partition 2 1 %) v)
-                (mapv (fn [x] (mapv (fn [y] (- (first y) (last y) )) x)) v)
+                (mapv jump-size v)
               )
         valid (count (filter identity (mapv valid? data)))
         ]
