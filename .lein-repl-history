@@ -49,3 +49,5 @@ a
 (re-seq #"(?:don't\(\)|do\(\)|mul\((\d+),(\d+)\))" a)
 (= "a" "a")
 (= "a" "av")
+(pprint "a")
+(pprint a)

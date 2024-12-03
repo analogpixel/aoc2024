@@ -9,6 +9,7 @@
 ; multiply the first and last elements of a vector
 (defn vmult [v] (* (first v) (last v)))
 
+; multiply the first and last elements of a vector of strings
 (defn string-mult [v] 
   (let [v (to-int v)]
     (vmult v)
@@ -33,21 +34,22 @@
   )
 
 (defn solve []
-  (let [ solution_1  ( as-> "day_3_sample_data.txt" v
+  (let [ solution_1  ( as-> "day_3_data.txt" v
                          (slurp v) ; read the data
                          (re-seq #"mul\((\d+),(\d+)\)" v)  ; strip out the digits
                          (mapv rest v)  ; remove the full match
-                         (mapv to-int v) ; convert everything to integers
-                         (mapv vmult v) ; multiply the first and last elements
+                         (mapv string-mult v) ; multiply the first and last elements 
                          (reduce + v) ; sum the results
                          )
 
-        solution_2 #p ( as-> "day_3_data.txt" v
+        solution_2  ( as-> "day_3_data.txt" v
                         (slurp v) ; read the data
                         (re-seq #"(?:don't\(\)|do\(\)|mul\((\d+),(\d+)\))" v) ; get valid commands
                         (process-state  v) ; process the commands
                         )
         ]
+
+    (println solution_1)
     (println solution_2)
     )
   )
