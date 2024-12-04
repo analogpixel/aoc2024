@@ -12,8 +12,20 @@
   ) 
 
 (defn check-word [w]
-  ;(or (= w '["X" "M" "A" "S"] ) (= w '["S" "A" "M" "X"]))
   (= w '["X" "M" "A" "S"] )
+  )
+
+(defn check-mas [w]
+  (or (= w '["M" "A" "S"]) (= w '["S" "A" "M"] ) )
+  )
+
+(defn check-x-directions [data y x]
+  (let [word1   (look-direction data (+ y 1) (+ x 1) [-1 -1] 3) 
+        word2   (look-direction data (+ y 1) (- x 1) [-1  1] 3) 
+        match   (and (check-mas word1) (check-mas  word2))
+        ]
+    (if  match 1 0)
+    )
   )
 
 (defn check-all-directions [data y x]
@@ -25,24 +37,23 @@
     )
   )
 
-(defn check-all-locations [data]
+(defn check-all-locations [ data checkfn ]
   (reduce + (for [y (range 0 (count data ))
                   x (range 0 (count (data 0 )))
                   ]
-              (check-all-directions data y x)
+              (checkfn data y x)
               ) )
   )
 
 (defn solve []
-  (let [ data  (as-> "day_4_sample_data.txt" v
+  (let [ data  (as-> "day_4_data.txt" v
                  (slurp v)
                  (str/split v #"\n")
                  (mapv #(str/split % #"") v)
                  )
         ]
-    (println "look-direction" (look-direction data 0 4 [0 1] 4 )) 
-    (println "check-all-directions" (check-all-directions data 0 4))
-    (println "check-all-locations" (check-all-locations data ))
+    (println "check-all-locations" (check-all-locations data check-all-directions))
+    (println "check-x-locations"   (check-all-locations data check-x-directions))
     (println data)
     )
   )
