@@ -82,3 +82,7 @@ a
 (+ 1 (int  (/ (count a) 2)))
 (int  (/ (count a) 2))
 (int  (/ (count b) 2))
+(def a '[1 2 3 4'])
+(def a '[1 2 3 4])
+a
+(update a 0 10)
