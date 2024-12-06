@@ -86,3 +86,7 @@ a
 (def a '[1 2 3 4])
 a
 (update a 0 10)
+(mapv #(println %1 %2) (range 0 3) (range 4 6))
+(mapv #(println %1 %2) (range 0 3) (range 4 7))
+(mapv #(println %1 %2) (range 0 3) (range 4 70))
+(> 1 -1)
