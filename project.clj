@@ -3,6 +3,7 @@
   :injections [(require 'hashp.core)]
   :dependencies [
                  [org.clojure/clojure "1.11.1"]
+                 [org.clojure/math.combinatorics "0.3.0"]
                  [hashp "0.2.2"]
                  ])
 
