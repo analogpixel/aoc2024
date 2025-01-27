@@ -4,7 +4,8 @@
             )
   )
 
-(def file_in "day_9_sample_data.txt")
+;(def file_in "day_9_sample_data.txt")
+(def file_in "day_9_data.txt")
 
 (defn build-disk-string [d]
   (let [
