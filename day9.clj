@@ -8,10 +8,14 @@
 
 ; TODO
 ; oh... index only works up to 9 :)   then numers overlap
+; ** instead of storing as strings store as vectors  **
+
 
 ;(def file_in "day_9_sample_data.txt")
 (def file_in "day_9_data.txt")
 
+
+; this should be build-disk-vector
 (defn build-disk-string [d]
   (let [
         idx (nth d 0)
