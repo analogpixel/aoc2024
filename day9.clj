@@ -4,6 +4,11 @@
             )
   )
 
+; 89425419840 too low
+
+; TODO
+; oh... index only works up to 9 :)   then numers overlap
+
 ;(def file_in "day_9_sample_data.txt")
 (def file_in "day_9_data.txt")
 
@@ -17,34 +22,39 @@
     )
   )
 
-
-; find the next empty space starting from position lpt
 (defn find-next-space [lpt v]
-  (cond 
-    (> lpt (count v)) false
-    (= (v lpt) ".") lpt
-    :else (find-next-space (inc lpt) v)
+  (loop [lpt lpt
+         v v  ]
+    (cond
+      (> lpt (count v)) #p false
+      (= (v lpt) ".") lpt
+      :else (recur (inc lpt) v)
+      )
     )
   )
 
 (defn find-next-number [rpt v]
-  (cond
-    (= rpt 0) false
-    (not (= (v rpt) ".")) rpt
-    :else (find-next-number (dec rpt) v)
+  (loop [rpt rpt
+         v v  ]
+    (cond
+      (= rpt 0) #p false
+      (not (= (v rpt) ".")) rpt
+      :else (recur (dec rpt) v)
+      )
     )
   )
 
 (defn swap [v i1 i2] 
   (assoc v i2 (v i1) i1 (v i2)))
 
-; left pointer points to next empty spot
-; right point points to current number to move
-; when left and right cross end the loop
 (defn compact-string [lpt rpt v]
-  (if (>= lpt rpt) v
-    (let [ v (swap v lpt rpt )]
-      (compact-string (find-next-space lpt v) (find-next-number rpt v) v)
+  (loop [lpt lpt
+         rpt rpt
+         v v]
+    (if (> lpt rpt) v
+      (let [ v (swap v lpt rpt )]
+        (recur (find-next-space lpt v) (find-next-number rpt v) v)
+        )
       )
     )
   )
@@ -66,13 +76,8 @@
                  (str/split v #"")
                  )
         ]
-    (print data "\n")
-    (print (checksum (compact-string (find-next-space 0 data) (dec (count data)) data)))
-    ; (print (swap data 
-    ;              (find-next-space 0 data) 
-    ;              (find-next-number (dec (count data)) data)
-    ;              )
-    ;        )
+    ;(print data "\n")
+    (print (checksum (compact-string (find-next-space 0 data) (find-next-number (dec (count data)) data) data)))
     )
   )
 
