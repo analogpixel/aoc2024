@@ -4,27 +4,21 @@
             )
   )
 
-; 89425419840 too low
-
-; TODO
-; oh... index only works up to 9 :)   then numers overlap
-; ** instead of storing as strings store as vectors  **
-
 
 ;(def file_in "day_9_sample_data.txt")
 (def file_in "day_9_data.txt")
 
 
-; this should be build-disk-vector
-(defn build-disk-string [d]
+(defn build-disk-vector [d]
   (let [
         idx (nth d 0)
         blocks (nth d 1)
         spaces (nth d 2)
         ]
-    (str (reduce str (repeat blocks idx)) (reduce str (repeat spaces ".")))
+    (concat (repeat blocks idx) (repeat spaces "."))
     )
   )
+
 
 (defn find-next-space [lpt v]
   (loop [lpt lpt
@@ -64,7 +58,7 @@
   )
 
 (defn checksum [s]
-  (reduce +  (map-indexed (fn [i x] (if (= x ".") 0 (* i (Integer/parseInt x)))) s  ))
+  (reduce +  (map-indexed (fn [i x] (if (= x ".") 0 (* i x)))  s  ))
   )
 
 
@@ -75,12 +69,10 @@
                  (mapv #(Integer/parseInt %) (str/split v #""))
                  (partition 2 2 '[0] v)
                  (map-indexed (fn [i x] (conj x i)) v)
-                 (mapv build-disk-string v)
-                 (reduce  str v)
-                 (str/split v #"")
+                 (vec (flatten (mapv build-disk-vector v)))
                  )
         ]
-    ;(print data "\n")
+    ; (print data "\n")
     (print (checksum (compact-string (find-next-space 0 data) (find-next-number (dec (count data)) data) data)))
     )
   )
